@@ -14,7 +14,7 @@ body {
 header {
     background-color: #000000;
     padding: 0;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #222;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -23,42 +23,56 @@ header {
 .header-content {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 20px 40px;
+    padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
 }
 
-.logo {
-    font-size: 48px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -2px;
-    font-family: 'Arial Black', sans-serif;
-    z-index: 1001;
+/* Logo + ZNN */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
+.logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    font-family: 'Arial Black', sans-serif;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Menu mobile */
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     z-index: 1001;
 }
 
 .mobile-menu-toggle span {
-    width: 25px;
-    height: 3px;
+    width: 24px;
+    height: 2.5px;
     background-color: #ffffff;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: rotate(45deg) translate(6px, 6px);
 }
 
 .mobile-menu-toggle.active span:nth-child(2) {
@@ -66,36 +80,59 @@ header {
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
+/* Navegação principal */
 nav {
     display: flex;
-    gap: 35px;
+    gap: 32px;
     align-items: center;
 }
 
 nav a {
-    color: #ffffff;
+    color: #cccccc;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 13px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    transition: color 0.3s;
+    transition: all 0.25s ease;
+    position: relative;
+    padding: 6px 0;
 }
 
+/* Efeito hover dinâmico */
 nav a:hover {
-    color: #888888;
+    color: #4ade80; /* Verde vibrante */
+    transform: translateY(-2px);
 }
 
+/* Linha de destaque sutil */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4ade80;
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* Container principal */
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 40px 40px;
 }
 
+/* Seções do portal (mantidas como estavam) */
 .empty-state {
     text-align: center;
     padding: 100px 20px;
@@ -113,7 +150,7 @@ nav a:hover {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* Hero Section - Destaque discreto */
+/* Hero Section - mantida */
 .hero-section {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -381,15 +418,34 @@ nav a:hover {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* Rodapé */
 footer {
-    background-color: #000000;
-    color: #888888;
-    text-align: center;
-    padding: 40px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1a1a1a;
+    color: #ccc;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-top: 60px;
-    font-size: 12px;
-    letter-spacing: 0.5px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.admin-login-link {
+    color: #4ade80;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #4ade80;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.admin-login-link:hover {
+    background-color: #4ade80;
+    color: #000;
 }
 
 /* Página de Notícia Individual */
@@ -487,7 +543,7 @@ footer {
     background-color: #333333;
 }
 
-/* Responsividade Tablet */
+/* Responsividade */
 @media (max-width: 1024px) {
     .container {
         padding: 30px 30px;
@@ -519,14 +575,17 @@ footer {
     }
 }
 
-/* Responsividade Mobile */
 @media (max-width: 768px) {
     .header-content {
         padding: 15px 20px;
     }
 
-    .logo {
-        font-size: 36px;
+    .logo-text {
+        font-size: 30px;
+    }
+
+    .logo-img {
+        height: 30px;
     }
 
     .mobile-menu-toggle {
@@ -557,12 +616,23 @@ footer {
         width: 100%;
         padding: 10px 0;
         border-bottom: 1px solid #333;
+        color: #cccccc;
+    }
+
+    nav a:hover {
+        color: #4ade80;
+        transform: none;
+    }
+
+    nav a::after {
+        display: none;
     }
 
     .container {
         padding: 25px 20px;
     }
 
+    /* Demais estilos mobile mantidos como antes */
     .hero-section {
         gap: 25px;
         padding-bottom: 25px;
@@ -638,12 +708,19 @@ footer {
 
     footer {
         margin-top: 40px;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
     }
 }
 
 @media (max-width: 480px) {
-    .logo {
-        font-size: 28px;
+    .logo-text {
+        font-size: 24px;
+    }
+
+    .logo-img {
+        height: 26px;
     }
 
     .main-news {

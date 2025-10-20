@@ -33,6 +33,8 @@ Salve suas imagens na pasta `imagens/` com nomes descritivos:
 - tecnologia-ia.jpg
 - etc.
 
+Use https://tinypng.com/ para comprimir as imagens antes de usá-las. 
+
 ### 3. No Painel Administrativo
 
 Ao criar/editar uma notícia:

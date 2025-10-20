@@ -31,5 +31,21 @@
       "imageText": "ESPORTES"
     }
   ],
-  "secondaryNews": []
+  "secondaryNews": [
+    {
+      "id": "news-1760999082199-097o72dgf",
+      "type": "secondary",
+      "title": "Notícia de Título Secundário",
+      "date": "20 de outubro de 2025",
+      "time": "19:23",
+      "reporter": "Fulano",
+      "category": "Mundo",
+      "categoryClass": "category-politics",
+      "excerpt": "Resumo da notícia",
+      "content": "<p>Conteúdo da Notícia.\nTeste de prágrafo. \nTeste só coum uma linha.</p>",
+      "imageUrl": "",
+      "imageColor": "linear-gradient(135deg, #0f172a 0%, #1e40af 100%)",
+      "imageText": "MUNDO"
+    }
+  ]
 }
