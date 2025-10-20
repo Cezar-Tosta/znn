@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZNN - Painel Administrativo</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <h1>ZNN Admin</h1>
+            <p>Acesso Restrito</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Digite a senha" required autofocus>
+                </div>
+                <button type="submit" class="btn-login">Entrar</button>
+                <p id="loginError" class="login-error"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Painel Administrativo -->
+    <div id="adminPanel" class="admin-container" style="display: none;">
+        <header class="admin-header">
+            <h1>ZNN - Painel Administrativo</h1>
+            <div class="header-actions">
+                <a href="index.html" class="btn-back">← Voltar ao Site</a>
+                <button onclick="logout()" class="btn-logout">Sair</button>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <div class="form-section">
+                <h2 id="formTitle">Adicionar Nova Notícia</h2>
+                <form id="newsForm">
+                    <input type="hidden" id="editingId" value="">
+                    
+                    <div class="form-group">
+                        <label for="newsType">Tipo de Notícia</label>
+                        <select id="newsType" required>
+                            <option value="">Selecione...</option>
+                            <option value="main">Notícia Principal (Hero)</option>
+                            <option value="sidebar">Notícia Lateral (Sidebar)</option>
+                            <option value="secondary">Notícia Secundária (Grid)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Título da Notícia</label>
+                        <input type="text" id="title" required placeholder="Digite o título da notícia">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Data</label>
+                            <input type="date" id="date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time">Horário</label>
+                            <input type="time" id="time" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reporter">Repórter</label>
+                        <input type="text" id="reporter" required placeholder="Nome do repórter">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Categoria</label>
+                        <select id="category" required>
+                            <option value="">Selecione...</option>
+                            <option value="Esportes">Esportes</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Economia">Economia</option>
+                            <option value="Entretenimento">Entretenimento</option>
+                            <option value="Política">Política</option>
+                            <option value="Mundo">Mundo</option>
+                            <option value="Ciência">Ciência</option>
+                            <option value="Cultura">Cultura</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="excerpt">Resumo (Excerpt)</label>
+                        <textarea id="excerpt" rows="3" placeholder="Breve resumo da notícia (1-2 linhas)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Conteúdo da Notícia</label>
+                        <textarea id="content" rows="10" required placeholder="Digite o conteúdo completo da notícia. Use parágrafos separados por linha em branco."></textarea>
+                        <small>Dica: Separe os parágrafos com uma linha em branco</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imageFile">Imagem (opcional)</label>
+                        <input type="file" id="imageFile" accept="image/*">
+                        <small>Ou insira o nome do arquivo já salvo na pasta 'imagens'</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imageName">Nome da Imagem na Pasta</label>
+                        <input type="text" id="imageName" placeholder="exemplo: noticia1.jpg">
+                        <small>Digite apenas o nome do arquivo que está na pasta 'imagens/'</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imageColor">Cor de Fundo (Gradiente)</label>
+                        <select id="imageColor">
+                            <option value="linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)">Verde Escuro</option>
+                            <option value="linear-gradient(135deg, #0f172a 0%, #1e40af 100%)">Azul Escuro</option>
+                            <option value="linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%)">Vermelho</option>
+                            <option value="linear-gradient(135deg, #1e293b 0%, #334155 100%)">Cinza Escuro</option>
+                            <option value="linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%)">Azul Claro</option>
+                            <option value="linear-gradient(135deg, #14532d 0%, #15803d 100%)">Verde</option>
+                            <option value="linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)">Laranja</option>
+                            <option value="linear-gradient(135deg, #581c87 0%, #9333ea 100%)">Roxo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit" id="submitBtn">Publicar Notícia</button>
+                        <button type="button" class="btn-reset" onclick="cancelEdit()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <h2>Notícias Publicadas</h2>
+                <div id="newsList" class="news-list">
+                    <!-- Lista de notícias será preenchida dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h3>✓ Sucesso!</h3>
+            <p id="modalMessage">Notícia publicada com sucesso!</p>
+            <button onclick="closeModal()" class="btn-modal">OK</button>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
