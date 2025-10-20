@@ -1,0 +1,35 @@
+{
+  "mainNews": {
+    "id": "news-1760996804468-g1h6a4v0r",
+    "type": "main",
+    "title": "Guerra",
+    "date": "20 de outubro de 2025",
+    "time": "18:45",
+    "reporter": "Tosta",
+    "category": "Mundo",
+    "categoryClass": "category-politics",
+    "excerpt": "Guerra entre AZUL e VERMELHO",
+    "content": "<p>Tiro, porrada e bomba para todo o lado. \nEstamos me guerra!</p>",
+    "imageUrl": "imagens/guerra.png",
+    "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
+    "imageText": "MUNDO"
+  },
+  "sidebarNews": [
+    {
+      "id": "news-1760997092531-9y538wevs",
+      "type": "sidebar",
+      "title": "Baixaria no Vasco",
+      "date": "20 de outubro de 2025",
+      "time": "18:50",
+      "reporter": "Tosta",
+      "category": "Esportes",
+      "categoryClass": "category-sports",
+      "excerpt": "Vasco perde de 7x0 para um time de anões",
+      "content": "<p>Mais uma vez o Vasco decepciona. \nE não foi por pouco, como sempre. \nA torcida abandonou o estádio com 5 minutos do primeiro tempo, quando o placar era de 3x0 para os Anões de Pelotas.</p>",
+      "imageUrl": "imagens/vasco.png",
+      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
+      "imageText": "ESPORTES"
+    }
+  ],
+  "secondaryNews": []
+}

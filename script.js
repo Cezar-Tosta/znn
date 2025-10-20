@@ -1,28 +1,25 @@
-// Banco de dados de notícias - Começa vazio
+// Estrutura inicial do banco de dados de notícias
 const newsDatabase = {
     mainNews: null,
     sidebarNews: [],
     secondaryNews: []
 };
 
-// Carregar notícias do localStorage
-function loadNewsDatabase() {
-    const savedNews = localStorage.getItem('znnNews');
-    
-    if (savedNews) {
-        const parsedNews = JSON.parse(savedNews);
-        
-        if (parsedNews.mainNews) {
-            newsDatabase.mainNews = parsedNews.mainNews;
+// Carregar notícias do arquivo data/news.json
+async function loadNewsDatabase() {
+    try {
+        const response = await fetch('data/news.json');
+        if (response.ok) {
+            const data = await response.json();
+            newsDatabase.mainNews = data.mainNews || null;
+            newsDatabase.sidebarNews = Array.isArray(data.sidebarNews) ? data.sidebarNews : [];
+            newsDatabase.secondaryNews = Array.isArray(data.secondaryNews) ? data.secondaryNews : [];
+        } else {
+            console.warn('Arquivo data/news.json não encontrado. Usando banco vazio.');
         }
-        
-        if (parsedNews.sidebarNews && parsedNews.sidebarNews.length > 0) {
-            newsDatabase.sidebarNews = parsedNews.sidebarNews;
-        }
-        
-        if (parsedNews.secondaryNews && parsedNews.secondaryNews.length > 0) {
-            newsDatabase.secondaryNews = parsedNews.secondaryNews;
-        }
+    } catch (error) {
+        console.error('Erro ao carregar data/news.json:', error);
+        // Mantém o estado vazio em caso de erro
     }
 }
 
@@ -30,7 +27,6 @@ function loadNewsDatabase() {
 function renderNews() {
     const container = document.getElementById('newsContainer');
     
-    // Verificar se há notícias
     const hasNews = newsDatabase.mainNews || 
                     newsDatabase.sidebarNews.length > 0 || 
                     newsDatabase.secondaryNews.length > 0;
@@ -138,30 +134,15 @@ function renderNews() {
     });
 }
 
-// Função para adicionar nova notícia
-function addNews(type, newsData) {
-    if (type === 'main') {
-        newsDatabase.mainNews = newsData;
-    } else if (type === 'sidebar') {
-        newsDatabase.sidebarNews.push(newsData);
-    } else if (type === 'secondary') {
-        newsDatabase.secondaryNews.push(newsData);
-    }
-    renderNews();
-}
-
 // Função para encontrar uma notícia por ID
 function findNewsById(newsId) {
-    // Procurar na notícia principal
     if (newsDatabase.mainNews && newsDatabase.mainNews.id === newsId) {
         return newsDatabase.mainNews;
     }
     
-    // Procurar na sidebar
     let news = newsDatabase.sidebarNews.find(n => n.id === newsId);
     if (news) return news;
     
-    // Procurar nas notícias secundárias
     news = newsDatabase.secondaryNews.find(n => n.id === newsId);
     return news;
 }
@@ -173,7 +154,6 @@ function showNewsPage(newsId) {
     
     const container = document.getElementById('newsContainer');
     
-    // Usar data e reporter personalizados se disponíveis
     const dateDisplay = news.date || new Date().toLocaleDateString('pt-BR', { 
         day: '2-digit', 
         month: 'long', 
@@ -190,7 +170,7 @@ function showNewsPage(newsId) {
     
     container.innerHTML = `
         <div class="news-page">
-            <a href="#" class="back-button" onclick="event.preventDefault(); loadNewsDatabase(); renderNews();">
+            <a href="#" class="back-button" onclick="event.preventDefault(); loadNewsDatabase().then(renderNews);">
                 ← Back to Home
             </a>
             
@@ -212,14 +192,13 @@ function showNewsPage(newsId) {
         </div>
     `;
     
-    // Rolar para o topo
     window.scrollTo(0, 0);
 }
 
 // Event listeners para navegação
-document.addEventListener('DOMContentLoaded', function() {
-    // Carregar notícias do localStorage
-    loadNewsDatabase();
+document.addEventListener('DOMContentLoaded', async function() {
+    // Carregar notícias do arquivo JSON
+    await loadNewsDatabase();
     
     // Renderizar notícias ao carregar a página
     renderNews();
@@ -258,11 +237,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const page = e.target.dataset.page;
             
             if (page === 'home') {
-                loadNewsDatabase();
-                renderNews();
+                loadNewsDatabase().then(renderNews);
             } else {
-                console.log('Navegando para:', page);
-                // Aqui você pode implementar lógica para carregar diferentes conjuntos de notícias
+                console.log('Navegando para categoria:', page);
+                // Futuramente, você pode filtrar notícias por categoria aqui
             }
         });
     });

@@ -59,10 +59,26 @@ function formatContent(text) {
     return paragraphs.map(p => `<p>${p.trim()}</p>`).join('\n                ');
 }
 
-// Função para mostrar modal
-function showModal(message) {
+// Função para mostrar modal com suporte a botões extras
+function showModal(message, extraButton = null) {
     const modal = document.getElementById('successModal');
-    document.getElementById('modalMessage').textContent = message;
+    const modalContent = document.querySelector('.modal-content');
+    
+    // Limpar conteúdo anterior
+    modalContent.innerHTML = `<h3>✓ Sucesso!</h3><p id="modalMessage">${message}</p>`;
+    
+    // Adicionar botão extra (ex: download)
+    if (extraButton) {
+        modalContent.appendChild(extraButton);
+    }
+    
+    // Botão OK padrão
+    const okBtn = document.createElement('button');
+    okBtn.textContent = 'OK';
+    okBtn.className = 'btn-modal';
+    okBtn.onclick = closeModal;
+    modalContent.appendChild(okBtn);
+    
     modal.classList.add('active');
 }
 
@@ -98,14 +114,14 @@ function updateNews(newsId, newsData) {
         secondaryNews: []
     };
 
-    // Primeiro, remover a notícia antiga
+    // Remover a notícia antiga
     if (allNews.mainNews && allNews.mainNews.id === newsId) {
         allNews.mainNews = null;
     }
     allNews.sidebarNews = allNews.sidebarNews.filter(n => n.id !== newsId);
     allNews.secondaryNews = allNews.secondaryNews.filter(n => n.id !== newsId);
 
-    // Agora adicionar com novo tipo/dados
+    // Adicionar com novo tipo/dados
     if (newsData.type === 'main') {
         allNews.mainNews = newsData;
     } else if (newsData.type === 'sidebar') {
@@ -115,6 +131,57 @@ function updateNews(newsId, newsData) {
     }
 
     localStorage.setItem('znnNews', JSON.stringify(allNews));
+}
+
+// Função para deletar notícia
+function deleteNews(newsId) {
+    if (!confirm('Tem certeza que deseja deletar esta notícia?')) {
+        return;
+    }
+
+    let allNews = JSON.parse(localStorage.getItem('znnNews')) || {
+        mainNews: null,
+        sidebarNews: [],
+        secondaryNews: []
+    };
+
+    if (allNews.mainNews && allNews.mainNews.id === newsId) {
+        allNews.mainNews = null;
+    }
+    allNews.sidebarNews = allNews.sidebarNews.filter(n => n.id !== newsId);
+    allNews.secondaryNews = allNews.secondaryNews.filter(n => n.id !== newsId);
+
+    localStorage.setItem('znnNews', JSON.stringify(allNews));
+    loadNewsList();
+
+    // Botão de download
+    const downloadBtn = document.createElement('button');
+    downloadBtn.textContent = 'Baixar news.json';
+    downloadBtn.className = 'btn-modal';
+    downloadBtn.onclick = downloadNewsJson;
+
+    showModal('Notícia deletada com sucesso!', downloadBtn);
+}
+
+// Função para baixar o arquivo news.json atualizado
+function downloadNewsJson() {
+    const allNews = JSON.parse(localStorage.getItem('znnNews')) || {
+        mainNews: null,
+        sidebarNews: [],
+        secondaryNews: []
+    };
+
+    const jsonStr = JSON.stringify(allNews, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'news.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    closeModal();
 }
 
 // Função para carregar lista de notícias
@@ -128,17 +195,14 @@ function loadNewsList() {
 
     let html = '';
 
-    // Adicionar notícia principal
     if (allNews.mainNews) {
         html += createNewsItemHTML(allNews.mainNews, 'Principal');
     }
 
-    // Adicionar notícias da sidebar
     allNews.sidebarNews.forEach(news => {
         html += createNewsItemHTML(news, 'Lateral');
     });
 
-    // Adicionar notícias secundárias
     allNews.secondaryNews.forEach(news => {
         html += createNewsItemHTML(news, 'Secundária');
     });
@@ -193,8 +257,6 @@ function editNews(newsId) {
     };
 
     let news = null;
-
-    // Encontrar a notícia
     if (allNews.mainNews && allNews.mainNews.id === newsId) {
         news = allNews.mainNews;
     } else {
@@ -204,14 +266,12 @@ function editNews(newsId) {
 
     if (!news) return;
 
-    // Preencher formulário
     document.getElementById('editingId').value = news.id;
     document.getElementById('formTitle').textContent = 'Editar Notícia';
     document.getElementById('submitBtn').textContent = 'Atualizar Notícia';
     document.getElementById('newsType').value = news.type;
     document.getElementById('title').value = news.title;
     
-    // Converter data formatada de volta para formato de input
     const dateMatch = news.date.match(/(\d{2}) de (\w+) de (\d{4})/);
     if (dateMatch) {
         const months = {
@@ -230,11 +290,9 @@ function editNews(newsId) {
     document.getElementById('category').value = news.category;
     document.getElementById('excerpt').value = news.excerpt;
     
-    // Converter HTML de volta para texto simples
     const content = news.content.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim();
     document.getElementById('content').value = content;
     
-    // Extrair apenas o nome do arquivo se houver imagem
     if (news.imageUrl) {
         const imageName = news.imageUrl.replace('imagens/', '');
         document.getElementById('imageName').value = imageName;
@@ -244,7 +302,6 @@ function editNews(newsId) {
     
     document.getElementById('imageColor').value = news.imageColor;
 
-    // Scroll para o formulário
     document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -255,40 +312,11 @@ function cancelEdit() {
     document.getElementById('submitBtn').textContent = 'Publicar Notícia';
     document.getElementById('newsForm').reset();
     
-    // Definir data e hora atual
     const now = new Date();
     const dateStr = now.toISOString().split('T')[0];
     const timeStr = now.toTimeString().split(' ')[0].substring(0, 5);
     document.getElementById('date').value = dateStr;
     document.getElementById('time').value = timeStr;
-}
-
-// Função para deletar notícia
-function deleteNews(newsId) {
-    if (!confirm('Tem certeza que deseja deletar esta notícia?')) {
-        return;
-    }
-
-    let allNews = JSON.parse(localStorage.getItem('znnNews')) || {
-        mainNews: null,
-        sidebarNews: [],
-        secondaryNews: []
-    };
-
-    // Verificar se é a notícia principal
-    if (allNews.mainNews && allNews.mainNews.id === newsId) {
-        allNews.mainNews = null;
-    }
-
-    // Remover das laterais
-    allNews.sidebarNews = allNews.sidebarNews.filter(n => n.id !== newsId);
-
-    // Remover das secundárias
-    allNews.secondaryNews = allNews.secondaryNews.filter(n => n.id !== newsId);
-
-    localStorage.setItem('znnNews', JSON.stringify(allNews));
-    loadNewsList();
-    showModal('Notícia deletada com sucesso!');
 }
 
 // Event listener para o formulário
@@ -307,13 +335,11 @@ document.getElementById('newsForm').addEventListener('submit', function(e) {
     const imageName = document.getElementById('imageName').value;
     const imageColor = document.getElementById('imageColor').value;
 
-    // Construir caminho da imagem se um nome foi fornecido
     let imageUrl = '';
     if (imageName && imageName.trim()) {
         imageUrl = 'imagens/' + imageName.trim();
     }
 
-    // Formatar data
     const dateObj = new Date(date + 'T' + time);
     const formattedDate = dateObj.toLocaleDateString('pt-BR', {
         day: '2-digit',
@@ -339,14 +365,10 @@ document.getElementById('newsForm').addEventListener('submit', function(e) {
 
     if (editingId) {
         updateNews(editingId, newsData);
-        showModal('Notícia atualizada com sucesso!');
         cancelEdit();
     } else {
         saveNews(newsData);
-        showModal('Notícia publicada com sucesso!');
         this.reset();
-        
-        // Definir data e hora atual novamente
         const now = new Date();
         const dateStr = now.toISOString().split('T')[0];
         const timeStr = now.toTimeString().split(' ')[0].substring(0, 5);
@@ -355,6 +377,14 @@ document.getElementById('newsForm').addEventListener('submit', function(e) {
     }
 
     loadNewsList();
+
+    // Botão de download
+    const downloadBtn = document.createElement('button');
+    downloadBtn.textContent = 'Baixar news.json';
+    downloadBtn.className = 'btn-modal';
+    downloadBtn.onclick = downloadNewsJson;
+
+    showModal(editingId ? 'Notícia atualizada com sucesso!' : 'Notícia publicada com sucesso!', downloadBtn);
 });
 
 // Definir data e hora atual ao carregar
