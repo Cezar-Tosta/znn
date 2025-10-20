@@ -42,7 +42,7 @@
       "category": "Mundo",
       "categoryClass": "category-politics",
       "excerpt": "Resumo da notícia",
-      "content": "<p>Conteúdo da Notícia.\nTeste de prágrafo. \nTeste só coum uma linha.</p>",
+      "content": "<p>Conteúdo da Notícia.</p>\n                <p>Teste do segundo parágrafo.</p>",
       "imageUrl": "",
       "imageColor": "linear-gradient(135deg, #0f172a 0%, #1e40af 100%)",
       "imageText": "MUNDO"

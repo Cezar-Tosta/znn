@@ -99,7 +99,7 @@ function renderNews() {
     if (newsDatabase.secondaryNews.length > 0) {
         html += `
             <div class="featured-section">
-                <h2 class="section-title">Latest Stories</h2>
+                <h2 class="section-title">Últimas Notícias</h2>
                 <div class="secondary-news">
                     ${newsDatabase.secondaryNews.map(news => {
                         const imageStyle = news.imageUrl 
@@ -171,7 +171,7 @@ function showNewsPage(newsId) {
     container.innerHTML = `
         <div class="news-page">
             <a href="#" class="back-button" onclick="event.preventDefault(); loadNewsDatabase().then(renderNews);">
-                ← Back to Home
+                ← Página Inicial
             </a>
             
             <div class="news-page-header">
