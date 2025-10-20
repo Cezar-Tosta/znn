@@ -1,10 +1,10 @@
 // Banco de dados de notícias
 const newsDatabase = {
     mainNews: {
-        title: "Brasil se classifica para final da Copa do Mundo de Futebol Feminino após vitória histórica",
+        title: "Azul atacou navios de vermelho",
         bullets: [
-            "Seleção vence Inglaterra por 2 a 1 em partida emocionante no Estádio Nacional",
-            "Marta marca gol histórico e se torna maior artilheira de Copas do Mundo",
+            "Conflito entre os países está em níveis alarmantes.",
+            "Jaimes ameaça interferir no conflito se faltar cuscuz.",
             "Final será disputada contra Espanha no próximo domingo às 16h em São Paulo",
             "Presidente declara ponto facultativo na segunda-feira para comemoração nacional"
         ],
