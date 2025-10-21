@@ -2,22 +2,6 @@
   "mainNews": null,
   "secondaryNews": [
     {
-      "id": "news-1761022216109-1dnio8ry7",
-      "title": "Guerra",
-      "date": "20 de outubro de 2025",
-      "time": "07:00",
-      "reporter": "Tosta",
-      "category": "Mundo",
-      "categoryClass": "category-world",
-      "excerpt": "Guerra entre AZUL e VERMELHO",
-      "content": "<div>.</div>",
-      "imageUrl": "imagens/guerra.png",
-      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-      "imageText": "MUNDO",
-      "rawDate": "2025-10-20T10:00:00.000Z",
-      "type": "recent"
-    },
-    {
       "id": "news-1761046393161-xeehl18to",
       "title": "GRUPO SINDICATO UNIDO",
       "date": "21 de outubro de 2025",
