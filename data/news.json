@@ -40,14 +40,14 @@
       "time": "08:51",
       "reporter": "Da Mata",
       "category": "Sociedade",
-      "categoryClass": "category-society",
-      "excerpt": "Exclusivo: Treino de Badminton Sub-12 em Presidente Prudente Interrompido por \"Muito Barulho de Aeronaves",
+      "excerpt": "Exclusivo: Treino de Badminton Sub-12 em Presidente Prudente Interrompido por \"Muito Barulho de Aeronaves\"",
       "content": "<h1>&nbsp;Custo-Benefício em Debate: Crianças Trocam Peteca por Vistas Aéreas Enquanto Contribuintes Questionam \"Planejamento\" de Manobras Militares</h1><div><br>PRESIDENTE PRUDENTE – Um espetáculo aéreo inusitado – e não planejado – interrompeu abruptamente o treino da equipe de badminton sub-12 de Presidente Prudente na tarde de ontem. Segundo relatos, a quadra poliesportiva, geralmente palco de saques precisos e rallies emocionantes, transformou-se em um \"observatório aeronáutico forçado\" devido ao intenso barulho de aeronaves militares sobrevoando a região.<br><br>\"Estávamos no meio de uma partida importantíssima, com as crianças super concentradas, quando começou aquele estrondo. Não tinha como ouvir o placar, nem o treinador\", desabafou uma fonte ligada ao evento, que preferiu não se identificar, completando com um suspiro: \"Era muito barulho de aeronaves\". Os jovens atletas, que deveriam estar focados na peteca, encontraram-se com os olhos fixos no céu, em uma mistura de curiosidade e surpresa.<br><br>O GRUPO FLEXA, a voz do contribuinte, não pode deixar de questionar: qual o custo-benefício de manobras que impactam diretamente a rotina e o lazer de nossos cidadãos mais jovens? Será que o planejamento dessas operações não poderia considerar horários ou rotas que evitem a interrupção de atividades tão singulares quanto um treino de badminton infantil?<br><br>Enquanto as crianças de Presidente Prudente ganharam uma experiência \"multissensorial\" com a defesa aérea – talvez um pouco mais barulhenta do que o ideal para um esporte de precisão –, a pergunta que fica é sobre a eficiência e a priorização de ações. O contribuinte espera que, em meio a importantes exercícios militares, o impacto na vida diária seja minimizado e que a peteca possa voar livremente sem concorrência com o tráfego aéreo de grande porte. Afinal, a ordem no placar também é uma forma de estabilidade.<br><br></div>",
       "imageUrl": "imagens/flexa.jpg",
       "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-      "imageText": "SOCIEDADE",
       "rawDate": "2025-10-21T11:51:00.000Z",
-      "type": "recent"
+      "type": "recent",
+      "categoryClass": "category-society",
+      "imageText": "SOCIEDADE"
     }
   ],
   "olderNews": [],
