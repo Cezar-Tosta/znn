@@ -157,7 +157,7 @@ nav a:hover::after {
 /* Seção que contém as 4 notícias superiores */
 .top-four-section {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Destaque ocupa 2 partes, Últimas 1 parte */
+    grid-template-columns: 2fr 1fr;
     gap: 30px;
     margin-bottom: 40px;
     padding-bottom: 40px;
@@ -167,7 +167,6 @@ nav a:hover::after {
 
 /* Seção da Notícia em Destaque */
 .highlight-news-section {
-    /* Ocupa a primeira coluna do grid */
 }
 
 .highlight-news {
@@ -175,15 +174,14 @@ nav a:hover::after {
     overflow: hidden;
     cursor: pointer;
     height: 100%;
-    min-height: 500px;
+    min-height: 400px; /* 👈 Ajustado */
     display: flex;
     flex-direction: column;
 }
 
 .highlight-news-image {
     width: 100%;
-    height: 100%;
-    min-height: 500px;
+    height: 400px; /* 👈 Reduzido de 500px */
     background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
     display: flex;
     align-items: center;
@@ -207,7 +205,7 @@ nav a:hover::after {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 200px;
+    height: 150px; /* 👈 Ajustado proporcionalmente */
     background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
 }
 
@@ -257,16 +255,15 @@ nav a:hover::after {
 
 /* Seção das 3 Últimas Notícias */
 .last-three-news-section {
-    /* Ocupa a segunda coluna do grid */
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Espaço entre os cards */
+    gap: 25px;
 }
 
 .last-three-news-column {
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Espaço entre os cards */
+    gap: 25px;
 }
 
 .last-three-news-card {
@@ -280,7 +277,7 @@ nav a:hover::after {
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    flex: 1; /* Permite que os cards cresçam igualmente */
+    flex: 1;
 }
 
 .last-three-news-card:hover {
@@ -290,7 +287,7 @@ nav a:hover::after {
 
 .last-three-news-card-image {
     width: 100%;
-    height: 160px;
+    height: 140px; /* 👈 Reduzido de 160px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -308,7 +305,7 @@ nav a:hover::after {
 }
 
 .last-three-news-card-content {
-    padding: 0 20px 20px 20px; /* Padding ajustado */
+    padding: 0 20px 20px 20px;
 }
 
 .last-three-news-card-category {
@@ -362,7 +359,7 @@ nav a:hover::after {
 
 .older-news-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    grid-template-columns: repeat(4, 1fr);
     gap: 25px;
 }
 
@@ -386,7 +383,7 @@ nav a:hover::after {
 
 .older-news-card-image {
     width: 100%;
-    height: 140px;
+    height: 120px; /* 👈 Reduzido de 140px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -497,17 +494,15 @@ nav a:hover::after {
     background-repeat: no-repeat;
 }
 
-/* Recuo na margem esquerda dos parágrafos */
 .news-page-content p {
     margin-bottom: 24px;
-    margin-left: 20px; /* Recuo à esquerda */
-    text-indent: 0; /* Remove indentação automática */
+    margin-left: 20px;
+    text-indent: 0;
     line-height: 1.8;
     font-size: 18px;
     color: #1a1a1a;
 }
 
-/* Estilo para imagens embutidas no texto */
 .news-page-content img {
     max-width: 100%;
     height: auto;
@@ -679,7 +674,7 @@ footer {
     }
 
     .top-four-section {
-        grid-template-columns: 1fr; /* Empilha em telas menores */
+        grid-template-columns: 1fr;
         gap: 30px;
         padding-bottom: 30px;
         margin-bottom: 30px;
@@ -687,11 +682,12 @@ footer {
     }
 
     .highlight-news {
-        min-height: 450px;
+        min-height: 400px;
     }
 
     .highlight-news-image {
-        min-height: 450px;
+        min-height: 400px;
+        height: 400px;
     }
 
     .highlight-news-title {
@@ -699,7 +695,7 @@ footer {
     }
 
     .last-three-news-section {
-        order: -1; /* Coloca 'Últimas Notícias' acima do Destaque em telas médias */
+        order: -1;
     }
 
     .last-three-news-column {
@@ -715,12 +711,12 @@ footer {
     }
 
     .older-news-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas médias */
+        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
 
     .category-news-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas médias */
+        grid-template-columns: repeat(2, 1fr);
         gap: 25px;
     }
 }
@@ -790,11 +786,12 @@ footer {
     }
 
     .highlight-news {
-        min-height: 400px;
+        min-height: 350px;
     }
 
     .highlight-news-image {
-        min-height: 400px;
+        min-height: 350px;
+        height: 350px;
     }
 
     .highlight-news-content {
@@ -814,7 +811,7 @@ footer {
     }
 
     .last-three-news-card-image {
-        height: 120px;
+        height: 100px; /* 👈 Reduzido */
     }
 
     .last-three-news-card-title {
@@ -822,12 +819,12 @@ footer {
     }
 
     .older-news-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas em mobile */
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
     .older-news-card-image {
-        height: 160px;
+        height: 140px; /* 👈 Reduzido */
     }
 
     .older-news-card-title {
@@ -861,7 +858,7 @@ footer {
     }
 
     .category-news-grid {
-        grid-template-columns: 1fr; /* 1 coluna em mobile */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 
@@ -890,29 +887,38 @@ footer {
         height: 26px;
     }
 
-    .main-news {
-        min-height: 350px;
+    .highlight-news {
+        min-height: 300px;
     }
 
-    .main-news-image {
-        min-height: 350px;
+    .highlight-news-image {
+        min-height: 300px;
+        height: 300px;
     }
 
-    .main-news-content {
+    .highlight-news-content {
         padding: 18px;
     }
 
-    .main-news-title {
+    .highlight-news-title {
         font-size: 19px;
     }
 
-    .main-news-category {
+    .highlight-news-category {
         font-size: 9px;
         padding: 4px 8px;
     }
 
-    .secondary-card-title {
+    .last-three-news-card-image {
+        height: 80px; /* 👈 Reduzido */
+    }
+
+    .last-three-news-card-title {
         font-size: 14px;
+    }
+
+    .older-news-card-image {
+        height: 120px; /* 👈 Reduzido */
     }
 
     .older-news-card-title {
