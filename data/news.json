@@ -16,6 +16,22 @@
       "imageText": "MUNDO",
       "rawDate": "2025-10-21T01:00:00.000Z",
       "type": "recent"
+    },
+    {
+      "id": "news-1761046393161-xeehl18to",
+      "title": "GRUPO SINDICATO UNIDO",
+      "date": "21 de outubro de 2025",
+      "time": "08:30",
+      "reporter": "Da Mata",
+      "category": "Sociedade",
+      "categoryClass": "category-society",
+      "excerpt": "Movimentação Militar em TOPÁZIO Visa Garantir Ordem e Soberania, com Atenção ao Cidadão",
+      "content": "<h1>População Local Expressa Preocupação com Rotina, Enquanto Autoridades de AZUL Reafirmam Legalidade das Ações</h1><div><br>TOPÁZIO registra nos últimos dias uma intensificação na presença de forças militares de AZUL, com a chegada de um batalhão de engenharia e unidades de patrulha terrestre. A movimentação faz parte de um conjunto de medidas de prontidão e segurança na fronteira, conforme informações divulgadas pelo Comando Conjunto de AZUL. O objetivo é claro: fortalecer a defesa da soberania e intensificar o combate a atividades ilícitas, como o crime organizado e a atuação do MPL, na região.<br><br>Apesar da justificativa oficial, a população local manifesta certo desconforto com a nova rotina. Relatos indicam um trânsito mais intenso em vias antes calmas e a presença visível de veículos e pessoal militar em pontos estratégicos da cidade. \"Compreendemos a necessidade de segurança, mas a rotina muda bastante\", afirmou um morador do centro de TOPÁZIO.<br><br>Em nota, as Forças Armadas de AZUL reforçaram o caráter defensivo e preventivo das operações, assegurando que todas as ações estão pautadas na legalidade, proporcionalidade e na proteção dos civis. \"A presença de nossas tropas visa primordialmente a estabilidade e a segurança de nossos cidadãos, garantindo o estado de direito\", declarou um porta-voz do Comando. A administração local de TOPÁZIO trabalha em conjunto com os militares para minimizar os impactos na vida civil, garantindo a normalidade social e a prestação de contas à comunidade.</div>",
+      "imageUrl": "imagens/sindicato.jpg",
+      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
+      "imageText": "SOCIEDADE",
+      "rawDate": "2025-10-21T11:30:00.000Z",
+      "type": "recent"
     }
   ],
   "olderNews": [],
