@@ -283,7 +283,7 @@ function editNews(newsId) {
     // Preenche os campos do formulário
     document.getElementById('title').value = news.title;
 
-    // --- CORREÇÃO 2: Usar rawDate para preencher campos de data/hora ---
+    // --- CORREÇÃO 1: Usar rawDate para preencher campos de data/hora ---
     if (news.rawDate) {
         const rawDateObj = new Date(news.rawDate);
         console.log("Usando rawDate para preencher campos:", rawDateObj);
@@ -297,7 +297,7 @@ function editNews(newsId) {
         console.warn("rawDate não encontrado, usando string formatada para preencher campos.");
         const dateMatch = news.date.match(/(\d{2}) de (\w+) de (\d{4})/);
         if (dateMatch) {
-            const months = { 'janeiro': '01', 'fevereiro': '02', 'março': '03', 'abril': '04', 'maio': '05', 'junho': '06', 'julho': '07', 'agosto': '08', 'setembro': '09', 'outubro': '10', 'novembro': '11', 'dezembro': '12' };
+            const months = {'janeiro':'01','fevereiro':'02','março':'03','abril':'04','maio':'05','junho':'06','julho':'07','agosto':'08','setembro':'09','outubro':'10','novembro':'11','dezembro':'12'};
             const day = dateMatch[1];
             const month = months[dateMatch[2].toLowerCase()];
             const year = dateMatch[3];
@@ -307,25 +307,27 @@ function editNews(newsId) {
         }
         document.getElementById('time').value = news.time; // Assume que a hora está no formato HH:MM
     }
-    // --- Fim da Correção 2 ---
+    // --- Fim da Correção 1 ---
 
     document.getElementById('reporter').value = news.reporter;
     document.getElementById('category').value = news.category;
     document.getElementById('excerpt').value = news.excerpt;
 
-    // Converter HTML de volta para texto simples para edição
-    const content = news.content
-        .replace(/<p>/g, '')
-        .replace(/<\/p>/g, '\n\n')
-        .replace(/<br>/g, '\n')
-        .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
-        .replace(/<em>(.*?)<\/em>/g, '*$1*')
-        .replace(/<a href="(.*?)" target="_blank">(.*?)<\/a>/g, '[$2]($1)')
-        .replace(/<img src="(.*?)" alt="(.*?)" class="inline-image">/g, '![$2]($1)')
-        .replace(/<h3>(.*?)<\/h3>/g, '### $1')
-        .replace(/<h2>(.*?)<\/h2>/g, '## $1')
-        .replace(/<h1>(.*?)<\/h1>/g, '# $1');
-    document.getElementById('content').value = content;
+    // --- CORREÇÃO 2: Preencher o editor Trix com o conteúdo HTML ---
+    // Em vez de converter HTML para texto, vamos injetar o HTML diretamente no editor
+    const trixEditorElement = document.querySelector('trix-editor[input="content"]');
+    if (trixEditorElement && trixEditorElement.editor) {
+        // Limpa o editor primeiro
+        trixEditorElement.editor.loadHTML(''); 
+        // Define o conteúdo HTML diretamente
+        trixEditorElement.editor.loadHTML(news.content);
+        console.log("Conteúdo HTML carregado no editor Trix para edição:", news.content);
+    } else {
+        console.warn("Editor Trix não encontrado ou não inicializado. Tentando fallback.");
+        // Fallback: definir valor no input hidden (pode não funcionar visualmente)
+        document.getElementById('content').value = news.content;
+    }
+    // --- Fim da Correção 2 ---
 
     if (news.imageUrl) {
         const imageName = news.imageUrl.replace('imagens/', '');

@@ -4,17 +4,17 @@
     {
       "id": "news-1761022216109-1dnio8ry7",
       "title": "Guerra",
-      "date": "21 de outubro de 2025",
+      "date": "22 de outubro de 2025",
       "time": "22:00",
       "reporter": "Tosta",
       "category": "Mundo",
       "categoryClass": "category-world",
       "excerpt": "Guerra entre AZUL e VERMELHO",
-      "content": "<div>Teste de conteúdo.</div>",
+      "content": "<div>Teste de <strong>conteúdo</strong>.</div>",
       "imageUrl": "imagens/guerra.png",
       "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
       "imageText": "MUNDO",
-      "rawDate": "2025-10-22T01:00:00.000Z",
+      "rawDate": "2025-10-23T01:00:00.000Z",
       "type": "recent"
     }
   ],
