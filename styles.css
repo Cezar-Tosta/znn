@@ -217,6 +217,22 @@ nav a:hover::after {
     padding: 30px;
     color: white;
     z-index: 2;
+
+    /* Fundo translúcido preto */
+    background: rgba(0, 0, 0, 0.75);
+
+    /* Sombra suave para destacar o bloco */
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+
+    /* Borda superior sutil para separação */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Arredondamento inferior (opcional, mas fica elegante) */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    /* Garantir que o texto não fique colado nas bordas */
+    margin: 0 15px; /* Ajuste de margem interna opcional */
 }
 
 .highlight-news-category {
@@ -796,6 +812,9 @@ footer {
 
     .highlight-news-content {
         padding: 20px;
+        background: rgba(0, 0, 0, 0.8); /* Um pouco mais opaco em mobile */
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
+        margin: 0 10px;
     }
 
     .highlight-news-title {
@@ -898,6 +917,9 @@ footer {
 
     .highlight-news-content {
         padding: 18px;
+        background: rgba(0, 0, 0, 0.85);
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        margin: 0 8px;
     }
 
     .highlight-news-title {
