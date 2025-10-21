@@ -43,7 +43,6 @@
                         <select id="newsType" required>
                             <option value="">Selecione...</option>
                             <option value="main">Notícia Principal (Hero)</option>
-                            <option value="sidebar">Notícia Lateral (Sidebar)</option>
                             <option value="secondary">Notícia Secundária (Grid)</option>
                         </select>
                     </div>
@@ -74,14 +73,11 @@
                         <label for="category">Categoria</label>
                         <select id="category" required>
                             <option value="">Selecione...</option>
-                            <option value="Esportes">Esportes</option>
-                            <option value="Tecnologia">Tecnologia</option>
-                            <option value="Economia">Economia</option>
-                            <option value="Entretenimento">Entretenimento</option>
                             <option value="Política">Política</option>
+                            <option value="Economia">Economia</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Sociedade">Sociedade</option>
                             <option value="Mundo">Mundo</option>
-                            <option value="Ciência">Ciência</option>
-                            <option value="Cultura">Cultura</option>
                         </select>
                     </div>
 
@@ -91,17 +87,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="content">Conteúdo da Notícia</label>
-                        <textarea id="content" rows="10" required placeholder="Digite o conteúdo completo da notícia. Use parágrafos separados por linha em branco."></textarea>
-                        <small>Dica: Separe os parágrafos com uma linha em branco</small>
+                        <label for="content">Conteúdo da Notícia (Markdown)</label>
+                        <textarea id="content" rows="15" required placeholder="Digite o conteúdo completo da notícia. Use Markdown para formatação (ex: # Título, **negrito**, *itálico*, ![alt](imagens/nome.jpg))."></textarea>
+                        <small>Dica: Use Markdown para formatar o conteúdo. Imagens devem estar na pasta 'imagens/'.</small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="imageFile">Imagem (opcional)</label>
-                        <input type="file" id="imageFile" accept="image/*">
-                        <small>Ou insira o nome do arquivo já salvo na pasta 'imagens'</small>
-                    </div>
-
+                    <!-- Campo para nome da imagem (removido o botão de upload) -->
                     <div class="form-group">
                         <label for="imageName">Nome da Imagem na Pasta</label>
                         <input type="text" id="imageName" placeholder="exemplo: noticia1.jpg">
