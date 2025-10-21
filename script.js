@@ -1,177 +1,191 @@
-const newsDatabase = { mainNews: null, secondaryNews: [] };
+// Banco de dados de notícias
+const newsDatabase = { mainNews: null, secondaryNews: [], olderNews: [] };
 
+// --- Funções de Carregamento ---
 function loadNewsDatabase() {
+    console.log("Iniciando loadNewsDatabase...");
     const savedNews = localStorage.getItem('znnNews');
     if (savedNews) {
-        const parsed = JSON.parse(savedNews);
-        newsDatabase.mainNews = parsed.mainNews || null;
-        newsDatabase.secondaryNews = parsed.secondaryNews || [];
+        try {
+            const parsed = JSON.parse(savedNews);
+            console.log("Dados brutos do localStorage ('znnNews'):", parsed);
+            newsDatabase.mainNews = parsed.mainNews || null;
+            newsDatabase.secondaryNews = parsed.secondaryNews || [];
+            newsDatabase.olderNews = parsed.olderNews || [];
+            console.log("Banco de dados carregado:", newsDatabase);
+        } catch (e) {
+            console.error("Erro ao parsear dados do localStorage ('znnNews'):", e);
+            // Em caso de erro, mantém o banco vazio
+        }
+    } else {
+        console.log("Nenhum dado encontrado no localStorage ('znnNews').");
     }
 }
 
+// --- Funções de Renderização ---
 function renderNews() {
+    console.log("Iniciando renderNews...");
     const container = document.getElementById('newsContainer');
-    const hasNews = newsDatabase.mainNews || newsDatabase.secondaryNews.length > 0;
-    if (!hasNews) {
-        container.innerHTML = `<div class="empty-state"><h2>Nenhuma notícia publicada</h2><p>O portal está vazio.</p></div>`;
+    if (!container) {
+        console.error("Elemento #newsContainer não encontrado.");
         return;
     }
 
-    // Separar notícias secundárias em recentes e antigas
-    const allSecondary = [...newsDatabase.secondaryNews];
-    // Ordenar por data (mais recente primeiro)
-    allSecondary.sort((a, b) => {
-        const dateA = new Date(a.date + ' ' + a.time);
-        const dateB = new Date(b.date + ' ' + b.time);
+    // Combinar todas as notícias para exibição unificada
+    // Agora, todas as notícias novas/vindas do admin vão para secondaryNews
+    const allNewsForDisplay = [...newsDatabase.secondaryNews];
+    console.log("Total de notícias para exibição:", allNewsForDisplay.length);
+
+    const hasNews = allNewsForDisplay.length > 0;
+    if (!hasNews) {
+        container.innerHTML = `<div class="empty-state"><h2>Nenhuma notícia publicada</h2><p>O portal está vazio.</p></div>`;
+        console.log("Nenhuma notícia para renderizar.");
+        return;
+    }
+
+    // --- CORREÇÃO 1: Ordenar TODAS as notícias da mais recente para a mais antiga ---
+    console.log("Ordenando notícias...");
+    allNewsForDisplay.sort((a, b) => {
+        let dateA, dateB;
+
+        // --- CORREÇÃO 2: Priorizar rawDate (objeto Date) se disponível ---
+        if (a.rawDate && b.rawDate) {
+            // Se ambas têm rawDate, use-as diretamente para comparação precisa
+            dateA = new Date(a.rawDate);
+            dateB = new Date(b.rawDate);
+            console.log(`Ordenando por rawDate: ${a.title} (${dateA}) vs ${b.title} (${dateB})`);
+        } else {
+            // Fallback: criar objetos Date a partir de string formatada
+            // Isso pode ser menos preciso se o formato for ambíguo
+            dateA = new Date(`${a.date} ${a.time}`);
+            dateB = new Date(`${b.date} ${b.time}`);
+            console.log(`Ordenando por string formatada: ${a.title} (${dateA}) vs ${b.title} (${dateB})`);
+        }
+        // Ordem decrescente (mais recente primeiro)
         return dateB - dateA;
     });
-
-    // Pegar as 3 mais recentes para o meio
-    const recentNews = allSecondary.slice(0, 3);
-    // O restante são as antigas
-    const olderNews = allSecondary.slice(3);
+    console.log("Notícias ordenadas:", allNewsForDisplay.map(n => `${n.title} (${n.date} ${n.time})`));
+    // --- Fim das Correções 1 e 2 ---
 
     let html = '';
 
-    // Matéria Principal (topo)
-    if (newsDatabase.mainNews) {
-        const hasImage = newsDatabase.mainNews.imageUrl ? 'has-image' : '';
-        const imageStyle = newsDatabase.mainNews.imageUrl 
-            ? `background-image: url('${newsDatabase.mainNews.imageUrl}'); background-color: transparent;` 
-            : `background: ${newsDatabase.mainNews.imageColor};`;
+    // --- Grade Unificada de Notícias (3 colunas) ---
+    html += `<div class="news-grid-section"><h2 class="section-title">Todas as Notícias</h2><div class="news-grid">`;
+
+    allNewsForDisplay.forEach((news, index) => {
+        console.log(`Renderizando notícia #${index + 1} (Ordem: ${index + 1}ª mais recente): ${news.title}`);
+        const imageStyle = news.imageUrl
+            ? `background-image: url('${news.imageUrl}'); background-color: transparent;`
+            : `background: ${news.imageColor};`;
         html += `
-            <div class="main-news-top">
-                <div class="main-news" data-news-id="${newsDatabase.mainNews.id}">
-                    <div class="main-news-image ${hasImage}" style="${imageStyle}">
-                        ${!newsDatabase.mainNews.imageUrl ? newsDatabase.mainNews.imageText : ''}
-                    </div>
-                    <div class="main-news-content">
-                        <span class="main-news-category">${newsDatabase.mainNews.category}</span>
-                        <h1 class="main-news-title">${newsDatabase.mainNews.title}</h1>
-                        <p class="main-news-excerpt">${newsDatabase.mainNews.excerpt}</p>
-                    </div>
+            <a href="#" class="news-grid-card" data-news-id="${news.id}">
+                <div class="news-grid-card-image" style="${imageStyle}">
+                    ${!news.imageUrl ? news.imageText : ''}
                 </div>
-            </div>
+                <div class="news-grid-card-content">
+                    <span class="news-grid-card-category ${news.categoryClass}">${news.category}</span>
+                    <h3 class="news-grid-card-title">${news.title}</h3>
+                    <p class="news-grid-card-excerpt">${news.excerpt}</p>
+                    <div class="news-grid-card-meta">${news.date} • ${news.time} • Por ${news.reporter}</div>
+                </div>
+            </a>
         `;
-    }
+    });
 
-    // Notícias Secundárias (meio)
-    if (recentNews.length > 0) {
-        html += `<div class="secondary-news-middle"><h2 class="section-title">Notícias Recentes</h2><div class="secondary-news-grid">`;
-        recentNews.forEach(news => {
-            const imageStyle = news.imageUrl 
-                ? `background-image: url('${news.imageUrl}'); background-color: transparent;` 
-                : `background: ${news.imageColor};`;
-            html += `
-                <a href="#" class="secondary-card" data-news-id="${news.id}">
-                    <div class="secondary-card-image" style="${imageStyle}">
-                        ${!news.imageUrl ? news.imageText : ''}
-                    </div>
-                    <div class="secondary-card-content">
-                        <span class="secondary-card-category">${news.category}</span>
-                        <h4 class="secondary-card-title">${news.title}</h4>
-                        <p class="secondary-card-excerpt">${news.excerpt}</p>
-                    </div>
-                </a>
-            `;
-        });
-        html += `</div></div>`;
-    }
-
-    // Notícias Antigas (fundo)
-    if (olderNews.length > 0) {
-        html += `<div class="older-news-bottom"><h2 class="section-title">Notícias Anteriores</h2><div class="older-news-grid">`;
-        olderNews.forEach(news => {
-            const imageStyle = news.imageUrl 
-                ? `background-image: url('${news.imageUrl}'); background-color: transparent;` 
-                : `background: ${news.imageColor};`;
-            html += `
-                <a href="#" class="older-news-card" data-news-id="${news.id}">
-                    <div class="older-news-card-image" style="${imageStyle}">
-                        ${!news.imageUrl ? news.imageText : ''}
-                    </div>
-                    <div class="older-news-card-content">
-                        <span class="older-news-card-category">${news.category}</span>
-                        <h4 class="older-news-card-title">${news.title}</h4>
-                        <p class="older-news-card-excerpt">${news.excerpt}</p>
-                    </div>
-                </a>
-            `;
-        });
-        html += `</div></div>`;
-    }
+    html += `</div></div>`; // Fecha .news-grid e .news-grid-section
 
     container.innerHTML = html;
+    console.log("HTML da página principal atualizado.");
 
     // Adicionar event listeners aos cards de notícias
     document.querySelectorAll('[data-news-id]').forEach(card => {
         card.addEventListener('click', (e) => {
             e.preventDefault();
             const newsId = e.currentTarget.dataset.newsId;
+            console.log(`Card de notícia clicado (ID: ${newsId}). Abrindo página.`);
             showNewsPage(newsId);
         });
     });
 }
 
 function findNewsById(newsId) {
+    console.log("Procurando notícia por ID:", newsId);
     if (newsDatabase.mainNews?.id === newsId) return newsDatabase.mainNews;
-    return newsDatabase.secondaryNews.find(n => n.id === newsId);
+    return newsDatabase.secondaryNews.find(n => n.id === newsId) || newsDatabase.olderNews.find(n => n.id === newsId);
 }
 
 function showNewsPage(newsId) {
+    console.log("Abrindo página de notícia para ID:", newsId);
     const news = findNewsById(newsId);
-    if (!news) return;
+    if (!news) {
+        console.error("Notícia não encontrada para ID:", newsId);
+        // Talvez exibir uma página de erro 404
+        return;
+    }
 
     const container = document.getElementById('newsContainer');
     const dateDisplay = news.date || new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     const reporterDisplay = news.reporter || 'Redação ZNN';
-    const imageStyle = news.imageUrl 
-        ? `background-image: url('${news.imageUrl}'); background-color: transparent;` 
+    const imageStyle = news.imageUrl
+        ? `background-image: url('${news.imageUrl}'); background-color: transparent;`
         : `background: ${news.imageColor};`;
 
     container.innerHTML = `
         <div class="news-page">
             <a href="#" class="back-button" onclick="event.preventDefault(); loadNewsDatabase(); renderNews();">
-                ← Back to Home
+                ← Página Inicial
             </a>
-            
+
             <div class="news-page-header">
-                <span class="news-page-category">${news.category}</span>
+                <span class="news-page-category ${news.categoryClass}">${news.category}</span>
                 <h1 class="news-page-title">${news.title}</h1>
                 <div class="news-page-meta">
                     ${dateDisplay} | Por ${reporterDisplay}
                 </div>
             </div>
-            
+
             <div class="news-page-image" style="${imageStyle}">
                 ${!news.imageUrl ? news.imageText : ''}
             </div>
-            
+
             <div class="news-page-content">
                 ${news.content}
             </div>
         </div>
     `;
-    
-    // Rolar para o topo
+
     window.scrollTo(0, 0);
+    console.log("Página de notícia renderizada.");
 }
 
 function showCategoryPage(category) {
+    console.log("Abrindo página de categoria:", category);
     const container = document.getElementById('newsContainer');
+
+    // Combinar todas as notícias
     const allNews = [
         ...(newsDatabase.mainNews ? [newsDatabase.mainNews] : []),
-        ...newsDatabase.secondaryNews
-    ].filter(news => news.category === category);
+        ...newsDatabase.secondaryNews,
+        ...newsDatabase.olderNews
+    ];
 
-    // Ordenar por data (mais recente primeiro)
-    allNews.sort((a, b) => {
-        const dateA = new Date(a.date + ' ' + a.time);
-        const dateB = new Date(b.date + ' ' + b.time);
-        return dateB - dateA; // Decrescente
+    // Filtrar pela categoria
+    const filteredNews = allNews.filter(news => news.category === category);
+
+    // Ordenar por data (mais recente primeiro) - MESMA LÓGICA DA PÁGINA PRINCIPAL
+    filteredNews.sort((a, b) => {
+        let dateA, dateB;
+        if (a.rawDate && b.rawDate) {
+            dateA = new Date(a.rawDate);
+            dateB = new Date(b.rawDate);
+        } else {
+            dateA = new Date(`${a.date} ${a.time}`);
+            dateB = new Date(`${b.date} ${b.time}`);
+        }
+        return dateB - dateA; // Ordem decrescente
     });
 
-    if (allNews.length === 0) {
+    if (filteredNews.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
                 <h2>Nenhuma notícia encontrada em "${category}"</h2>
@@ -184,28 +198,26 @@ function showCategoryPage(category) {
     let html = `
         <div class="category-header">
             <h1>${category}</h1>
-            <p>${allNews.length} notícia${allNews.length > 1 ? 's' : ''} encontrada${allNews.length > 1 ? 's' : ''}</p>
+            <p>${filteredNews.length} notícia${filteredNews.length > 1 ? 's' : ''} encontrada${filteredNews.length > 1 ? 's' : ''}</p>
         </div>
-        <div class="category-grid">
+        <div class="category-news-grid">
     `;
 
-    html += allNews.map(news => {
-        const imageStyle = news.imageUrl 
-            ? `background-image: url('${news.imageUrl}'); background-color: transparent;` 
+    html += filteredNews.map(news => {
+        const imageStyle = news.imageUrl
+            ? `background-image: url('${news.imageUrl}'); background-color: transparent;`
             : `background: ${news.imageColor};`;
-        
+
         return `
-            <a href="#" class="category-card" data-news-id="${news.id}">
-                <div class="category-card-image" style="${imageStyle}">
+            <a href="#" class="category-news-card" data-news-id="${news.id}">
+                <div class="category-news-card-image" style="${imageStyle}">
                     ${!news.imageUrl ? news.imageText : ''}
                 </div>
-                <div class="category-card-content">
-                    <span class="category-tag ${news.categoryClass}">${news.category}</span>
-                    <h3 class="category-card-title">${news.title}</h3>
-                    <p class="category-card-excerpt">${news.excerpt}</p>
-                    <div class="category-card-meta">
-                        ${news.date} • ${news.time} • Por ${news.reporter}
-                    </div>
+                <div class="category-news-card-content">
+                    <span class="category-news-card-category ${news.categoryClass}">${news.category}</span>
+                    <h3 class="category-news-card-title">${news.title}</h3>
+                    <p class="category-news-card-excerpt">${news.excerpt}</p>
+                    <div class="category-news-card-meta">${news.date} • ${news.time} • Por ${news.reporter}</div>
                 </div>
             </a>
         `;
@@ -216,7 +228,7 @@ function showCategoryPage(category) {
     container.innerHTML = html;
 
     // Adicionar event listeners aos cards
-    document.querySelectorAll('.category-card').forEach(card => {
+    document.querySelectorAll('.category-news-card').forEach(card => {
         card.addEventListener('click', (e) => {
             e.preventDefault();
             const newsId = e.currentTarget.dataset.newsId;
@@ -224,69 +236,86 @@ function showCategoryPage(category) {
         });
     });
 
-    // Rolar para o topo
     window.scrollTo(0, 0);
 }
 
-// Event listeners para navegação
-document.addEventListener('DOMContentLoaded', function() {
+// --- Eventos DOMContentLoaded ---
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("DOM Index totalmente carregado.");
+
     // Carregar notícias do localStorage
     loadNewsDatabase();
-    
+
     // Renderizar notícias ao carregar a página
     renderNews();
-    
-    // Menu mobile toggle
+
+    // --- Menu Mobile Toggle ---
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mainNav = document.getElementById('mainNav');
-    
-    if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
+
+    if (mobileMenuToggle && mainNav) {
+        console.log("Elementos de menu encontrados.");
+
+        const toggleMenu = () => {
+            mobileMenuToggle.classList.toggle('active');
             mainNav.classList.toggle('active');
-        });
-        
-        // Fechar menu ao clicar em um link
-        document.querySelectorAll('nav a').forEach(link => {
+            console.log("Estado do menu toggled.");
+        };
+
+        mobileMenuToggle.addEventListener('click', toggleMenu);
+
+        // Fechar menu ao clicar em um link de navegação
+        document.querySelectorAll('nav a[data-page]').forEach(link => {
             link.addEventListener('click', () => {
+                console.log(`Link do menu '${link.textContent}' clicado.`);
+                // Fechar menu mobile se estiver aberto
                 mobileMenuToggle.classList.remove('active');
                 mainNav.classList.remove('active');
+
+                // --- Navegação por Categoria ou Home ---
+                const page = link.getAttribute('data-page');
+                if (page === 'home') {
+                    console.log("Navegando para a página inicial.");
+                    loadNewsDatabase(); // Recarrega todas as notícias
+                    renderNews();       // Re-renderiza com todas
+                } else {
+                    // Mapeamento de página para categoria
+                    const categoryMap = {
+                        'politica': 'Política',
+                        'economia': 'Economia',
+                        'tecnologia': 'Tecnologia',
+                        'sociedade': 'Sociedade',
+                        'mundo': 'Mundo'
+                    };
+                    const category = categoryMap[page];
+                    if (category) {
+                        console.log(`Filtrando por categoria: ${category}`);
+                        showCategoryPage(category);
+                    }
+                }
             });
         });
-        
-        // Fechar menu ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!mobileMenuToggle.contains(e.target) && !mainNav.contains(e.target)) {
+
+        // Fechar menu ao clicar *fora* dele (opcional, mas bom para UX)
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuToggle.contains(e.target) && !mainNav.contains(e.target) && (mobileMenuToggle.classList.contains('active') || mainNav.classList.contains('active'))) {
+                console.log("Clique fora do menu detectado. Fechando menu.");
                 mobileMenuToggle.classList.remove('active');
                 mainNav.classList.remove('active');
             }
         });
+
+    } else {
+        console.warn("Elementos de menu (#mobileMenuToggle ou #mainNav) não encontrados.");
     }
-    
-    // Adicionar event listeners aos links de navegação
-    document.querySelectorAll('nav a').forEach(link => {
+
+    // Adicionar event listeners aos links de navegação (caso o menu mobile não funcione)
+    document.querySelectorAll('nav a[data-page]').forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const page = e.target.dataset.page;
-            
-            if (page === 'home') {
-                loadNewsDatabase();
-                renderNews();
-            } else {
-                // Mapeamento de página para categoria
-                const categoryMap = {
-                    'politica': 'Política',
-                    'economia': 'Economia',
-                    'tecnologia': 'Tecnologia',
-                    'sociedade': 'Sociedade',
-                    'mundo': 'Mundo'
-                };
-                
-                const category = categoryMap[page];
-                if (category) {
-                    showCategoryPage(category);
-                }
-            }
+            // Este listener é um fallback e pode ser redundante com o de cima
+            // mas garante funcionamento em alguns cenários
+            console.log("Listener de fallback para link de navegação acionado.");
+            // A lógica real já está no listener acima.
         });
     });
 });

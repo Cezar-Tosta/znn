@@ -371,6 +371,7 @@ body {
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
+    margin-right: 8px;
     transition: background-color 0.3s;
 }
 

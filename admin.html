@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZNN - Painel Administrativo</title>
     <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
 </head>
 <body>
     <!-- Tela de Login -->
@@ -37,16 +39,7 @@
                 <h2 id="formTitle">Adicionar Nova Notícia</h2>
                 <form id="newsForm">
                     <input type="hidden" id="editingId" value="">
-                    
-                    <div class="form-group">
-                        <label for="newsType">Tipo de Notícia</label>
-                        <select id="newsType" required>
-                            <option value="">Selecione...</option>
-                            <option value="main">Notícia Principal (Hero)</option>
-                            <option value="secondary">Notícia Secundária (Grid)</option>
-                        </select>
-                    </div>
-
+                  
                     <div class="form-group">
                         <label for="title">Título da Notícia</label>
                         <input type="text" id="title" required placeholder="Digite o título da notícia">
@@ -87,12 +80,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="content">Conteúdo da Notícia (Markdown)</label>
-                        <textarea id="content" rows="15" required placeholder="Digite o conteúdo completo da notícia. Use Markdown para formatação (ex: # Título, **negrito**, *itálico*, ![alt](imagens/nome.jpg))."></textarea>
-                        <small>Dica: Use Markdown para formatar o conteúdo. Imagens devem estar na pasta 'imagens/'.</small>
+                        <label for="content">Conteúdo da Notícia</label>
+                        <!-- O input type="hidden" armazena o conteúdo HTML -->
+                        <input id="content" type="hidden" name="content" required>
+                        <!-- O TrixEditor será criado aqui -->
+                        <trix-editor input="content"></trix-editor>
+                        <small>Digite ou cole o conteúdo da notícia. Use os botões acima para formatar.</small>
                     </div>
 
-                    <!-- Campo para nome da imagem (removido o botão de upload) -->
+                    <!-- Campo para nome da imagem -->
                     <div class="form-group">
                         <label for="imageName">Nome da Imagem na Pasta</label>
                         <input type="text" id="imageName" placeholder="exemplo: noticia1.jpg">
