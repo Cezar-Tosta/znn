@@ -1,80 +1,19 @@
 {
   "mainNews": {
-    "id": "news-1761007176758-tqfy266lu",
+    "id": "news-1761008314593-pidlp9cqz",
     "type": "main",
-    "title": "N1",
+    "title": "TESTE",
     "date": "21 de outubro de 2025",
-    "time": "21:38",
-    "reporter": "kjbkjb",
-    "category": "Economia",
-    "categoryClass": "category-economy",
-    "excerpt": "knlknl",
-    "content": "<p><h1>Título</h1></p><p>Teste de <strong>parágrafo</strong></p><p></p><p></p>",
+    "time": "21:58",
+    "reporter": "Repórter teste",
+    "category": "Sociedade",
+    "categoryClass": "category-society",
+    "excerpt": "Resumo teste",
+    "content": "<p>Conteúdo teste</p>",
     "imageUrl": "imagens/guerra.png",
     "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-    "imageText": "ECONOMIA"
+    "imageText": "SOCIEDADE"
   },
   "sidebarNews": [],
-  "secondaryNews": [
-    {
-      "id": "news-1761007414165-qws6ti22t",
-      "type": "secondary",
-      "title": "w4f4f4f",
-      "date": "21 de outubro de 2025",
-      "time": "21:43",
-      "reporter": "4f4f4",
-      "category": "Economia",
-      "categoryClass": "category-economy",
-      "excerpt": "4f4f4",
-      "content": "<p>4f4f4f4</p>",
-      "imageUrl": "",
-      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-      "imageText": "ECONOMIA"
-    },
-    {
-      "id": "news-1761007443764-5cs3zy4y6",
-      "type": "secondary",
-      "title": "f4ff4",
-      "date": "21 de outubro de 2025",
-      "time": "21:43",
-      "reporter": "g5g5g",
-      "category": "Economia",
-      "categoryClass": "category-economy",
-      "excerpt": "5g5g5g5",
-      "content": "<p>g5g5</p>",
-      "imageUrl": "",
-      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-      "imageText": "ECONOMIA"
-    },
-    {
-      "id": "news-1761007456882-ymmilsy89",
-      "type": "secondary",
-      "title": "hjytuu",
-      "date": "21 de outubro de 2025",
-      "time": "21:44",
-      "reporter": "umumum",
-      "category": "Economia",
-      "categoryClass": "category-economy",
-      "excerpt": "mmumu",
-      "content": "<p>ummum</p>",
-      "imageUrl": "",
-      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-      "imageText": "ECONOMIA"
-    },
-    {
-      "id": "news-1761007474333-hcdy3p4rb",
-      "type": "secondary",
-      "title": "uymutyfbdt",
-      "date": "21 de outubro de 2025",
-      "time": "21:44",
-      "reporter": "mhngb",
-      "category": "Sociedade",
-      "categoryClass": "category-society",
-      "excerpt": "utnytbev",
-      "content": "<p>h gfbt</p>",
-      "imageUrl": "imagens/vasco.png",
-      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
-      "imageText": "SOCIEDADE"
-    }
-  ]
+  "secondaryNews": []
 }
