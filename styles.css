@@ -107,7 +107,7 @@ nav a {
 
 /* Efeito hover dinâmico */
 nav a:hover {
-    color: #4ade80; /* Verde vibrante */
+    color: #e3f30c; /* Verde vibrante */
     transform: translateY(-2px);
 }
 
