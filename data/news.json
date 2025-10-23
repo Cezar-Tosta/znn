@@ -96,6 +96,22 @@
       "type": "recent",
       "categoryClass": "category-society",
       "imageText": "SOCIEDADE"
+    },
+    {
+      "id": "news-1761057766503-q998hlgk8",
+      "title": "Ataque Hacker em TOPÁZIO",
+      "date": "21 de outubro de 2025",
+      "time": "11:39",
+      "reporter": "Galbraith",
+      "category": "Tecnologia",
+      "excerpt": "Porto de Santos Sob Ataque Hacker: Guerra Cibernética Entre AZUL e VERMELHO Atinge População",
+      "content": "<div><strong>1. A Situação</strong><br><br>Santos, SP — A situação tensa entre os Estados AZUL e VERMELHO atingiu em cheio a vida dos moradores de TOPÁZIO e FENO. Na madrugada do dia X-2, o Porto de Santos, principal eixo logístico do Estado AZUL, foi alvo de um ataque hacker devastador, atribuído a agentes cibernéticos de VERMELHO.<br><br>Segundo fontes do Comando de Defesa Cibernética de AZUL, um malware avançado foi implantado nos sistemas de controle do porto, paralisando operações de carga e descarga, bloqueando o acesso a dados de embarque e corrompendo registros de rastreamento de mercadorias. O ataque, parte da ofensiva digital de VERMELHO, provocou um verdadeiro colapso logístico e social na região.<br><br></div><blockquote><em>\"O porto virou um caos. Caminhões parados, navios sem previsão de atracação e o sistema de rastreamento totalmente fora do ar. É como se estivéssemos em estado de sítio digital\"</em>, relatou um operador do Porto de Santos.</blockquote><div><br><strong>2. Impactos Diretos na População</strong><br><br>- Supermercados de Topázio e FENO já registram falta de produtos básicos, como arroz, leite e carne, devido ao bloqueio das cargas vindas do Porto de Santos.<br>- Postos de gasolina enfrentam filas intermináveis e alguns já estão sem combustível, afetando inclusive ambulâncias e viaturas policiais.<br>- Empresas de exportação e importação de AZUL relatam prejuízos milionários e temem demissões em massa.<br>- Moradores de Santos, Topázio e cidades vizinhas relatam pânico diante da possibilidade de desabastecimento prolongado e aumento dos preços.<br><br><strong>3. Autoridades de AZUL em Alerta</strong><br>O Comando Conjunto COBRA e o Comando de Defesa Cibernética de AZUL ativaram protocolos de emergência, isolando segmentos afetados e tentando restaurar sistemas críticos. O governo de AZUL decretou estado de emergência na Baixada Santista e orientou a população a evitar deslocamentos desnecessários.<br><br></div><blockquote><em>\"Estamos diante de uma guerra invisível. O ataque ao Porto de Santos mostra que a guerra cibernética é tão perigosa quanto a convencional. AZUL precisa reforçar sua defesa digital imediatamente\"</em>, declarou um especialista em segurança cibernética do Estado-Maior de AZUL.</blockquote><div><br><strong>4. Risco de Efeito Cascata</strong><br>Especialistas alertam que, se o ataque não for contido rapidamente, outras cidades estratégicas de AZUL, como Topázio e FENO, podem sofrer apagões logísticos, afetando hospitais, escolas e até o abastecimento de água. O medo de novos ataques cresce, e a população exige respostas imediatas das autoridades de AZUL.<br><br><strong>Acompanhe a cobertura completa e atualizações em tempo real sobre o maior ataque hacker já registrado&nbsp;em&nbsp;AZUL</strong><br><br></div>",
+      "imageUrl": "imagens/hacker.png",
+      "imageColor": "linear-gradient(135deg, #1a1a1a 0%, #2d5016 100%)",
+      "rawDate": "2025-10-21T14:39:00.000Z",
+      "type": "recent",
+      "categoryClass": "category-tech",
+      "imageText": "TECNOLOGIA"
     }
   ],
   "olderNews": [],
